@@ -12,13 +12,23 @@ and a winner or loser is defined. If the scores are the same, the result becomes
 ---
 
 ## The technique of the game is explained in the image below:
+<br>
+<img src="./images/1.jpg" width="425" height="388">
 
-![The rule of the game](./images/1.jpg)
 
 
 ---
 
-[Please click here to see it in the browser]()
+## **Languages**
+<br>
+
+<img align="center" src="./images/js.jpg" width="80" height="40"> JavaScript 100.0%
+
+---
+
+<br>
+
+[Please click here to play the game in the browser]()
 
 
  

@@ -166,7 +166,8 @@ function game() {
     let instructionMessage = title.toUpperCase() + '\u{1F447}' + `\n\n    The game consists of 5 rounds.
     In each round, you will be given 10 chances to write your
     answer correctly.
-    You need to guess the selection of computer in order to win.
+    You should type either rock, paper or scissors.
+    You also need to guess the selection of computer in order to win.
     In fact, computer randomly selects one of the following 3 options:
     1. Rock         2. Paper        3. Scissors
     Please check your spelling after entering your input.
@@ -181,7 +182,7 @@ function game() {
             let playerSelection = prompt("Please type either rock, paper or scissors:");
             const computerSelection = computerPlay();
             if (playerSelection === "" || playerSelection === null || playerSelection === undefined) {
-                while(playerSelection === "" || playerSelection === null) {
+                while(playerSelection === "" || playerSelection === null || playerSelection === undefined){
                     alert("You should enter some text");
                     playerSelection = prompt("Please type either rock, paper or scissors:");
                 } 
