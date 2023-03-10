@@ -196,14 +196,18 @@ function game() {
                 alert("Now press OK to turn to the next round."); 
             }
         }
+        console.log(`\nThe game is over...`);
         if (player.score > computer.score){
-            alert("You win");
+            alert(`\u{1F917} Congratulaions!!! You win!`);
+            console.log(`\u{1F917} Congratulaions!!! You win!`);
         }
         else if (computer.score > player.score) {
-            alert("You lose");
+            alert(`\u{1F614} You lose!`);
+            console.log(`\u{1F614} You lose!`);
         }
         else {
-            alert("Draw");
+            alert(`\u{1F91D} Draw`);
+            console.log(`\u{1F91D} Draw!`);
         }
         alert("The game is over. Press OK to exit");
         return;
