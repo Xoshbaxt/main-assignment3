@@ -28,7 +28,7 @@ and a winner or loser is defined. If the scores are the same, the result becomes
 
 <br>
 
-[Please click here to play the game in the browser]()
+[Please click here to play the game in the browser](https://xoshbaxt.github.io/main-assignment3/)
 
 
  
