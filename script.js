@@ -23,7 +23,7 @@ function checkForEmptyValue(playerInput) {
 function collectPlayerData() {
     let playerSelection = prompt("Please type either rock, paper or scissors:");
     playerSelection = checkForEmptyValue(playerSelection);
-    // Checking if a player canlceled the game or playerSelection is undefined
+    // Checking if a player canlceled the game
     if(playerSelection!== undefined && playerSelection !== null) {
         playerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase(); 
         if (!array_of_choices.includes(playerSelection)) {
@@ -31,7 +31,7 @@ function collectPlayerData() {
                 alert(`You typed a wrong word. Try again`);
                 playerSelection = prompt("Please type either rock, paper or scissors:");
                 playerSelection = checkForEmptyValue(playerSelection);
-                // Checking if a player canlceled the game or playerSelection is undefined   
+                // Checking if a player canlceled the game  
                 if(playerSelection !== undefined && playerSelection !== null) {
                     playerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase();
                 } 
