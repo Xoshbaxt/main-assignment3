@@ -1,139 +1,70 @@
 function computerPlay() {
-    const array_of_choices = ['Rock', 'Paper', 'Scissors'];
     let random_choice = Math.floor(Math.random()*3);
-    //console.log(array_of_choices[random_choice]);
     return array_of_choices[random_choice];
 }
 
-function playRound(playerSelection, computerSelection) {
-    const array_of_choices = ['Rock', 'Paper', 'Scissors'];
-    player.changeGuessCount = 10;
-    let convertedPlayerSelection;
-    try {
-        convertedPlayerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase(); 
-        if (!array_of_choices.includes(convertedPlayerSelection)) {
-            player.changeGuessCount = player.guessCount - 1;
-            alert(`You typed a wrong word. You can try ${player.guessCount} times`);
-            playerSelection = prompt("Please type either rock, paper or scissors:");
-            while (player.guessCount > 0) {
-                if (playerSelection === "" || playerSelection === null || playerSelection === undefined) {
-                    while (playerSelection === "" || playerSelection === null) {
-                        alert("You should enter some text");
-                        playerSelection = prompt("Please type either rock, paper or scissors:");
-                    } 
-                }
-                else {
-                    convertedPlayerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase();
-                    if (array_of_choices.includes(convertedPlayerSelection)) { 
-                        if (convertedPlayerSelection === 'Rock') {
-                            if (computerSelection === 'Paper') {
-                                computer.score++;
-                                return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                            }
-                            else if (computerSelection === 'Scissors') {
-                                player.score++;
-                                return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                            }
-                            else if (computerSelection === 'Rock') {
-                                return "Draw!";
-                            }
-                        }
-                        else if (convertedPlayerSelection === 'Paper') {
-                            if (computerSelection === 'Scissors') {
-                                computer.score++;
-                                return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                            }
-                            else if (computerSelection === 'Rock') {
-                                player.score++;
-                                return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                            }
-                            else if (computerSelection === 'Paper') {
-                                return "Draw!";
-                            }
-                        }
-                        else if (convertedPlayerSelection === 'Scissors') {
-                            if (computerSelection === 'Rock') {
-                                computer.score++;
-                                return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                            }
-                            else if (computerSelection === 'Paper') {
-                                player.score++;
-                                return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                            }
-                            else if (computerSelection === 'Scissors') {
-                                return "Draw!";
-                            }
-                        }
-                    }
-                    else {
-                        if (player.guessCount === 1) {
-                            alert(`You lose. This round is over`);
-                            player.changeGuessCount = player.guessCount - 1;
-                        }
-                        else if (player.guessCount === 2) {
-                            player.changeGuessCount = player.guessCount - 1;
-                            alert(`You typed a wrong word. You can try the last time`);
-                            playerSelection = prompt("Please type either rock, paper or scissors:");
-                        }
-                        else {
-                            player.changeGuessCount = player.guessCount - 1;
-                            alert(`You typed a wrong word. You can try ${player.guessCount} times`);
-                            playerSelection = prompt("Please type either rock, paper or scissors:");
-                        }
-                    }
-                }
-            }
-            if(player.guessCount === 0){
-                computer.score++;
-                return "You lose!";
+function checkForEmptyValue(playerInput) {
+    if(playerInput !== null) playerInput = playerInput.trim(" ");
+     // Checking for empty value
+    while(playerInput === ""){
+        alert("You should enter some text");
+        playerInput = prompt("Please type either rock, paper or scissors:");
+        if(playerInput !== null) playerInput = playerInput.trim(" ");
+        else break;
+    } 
+    // Checking whether a player wants to exit the game or not
+    if (playerInput === null) {
+        if(exit()) game();
+        else return;
+    }
+    return playerInput;
+}
+
+function collectPlayerData() {
+    let playerSelection = prompt("Please type either rock, paper or scissors:");
+    playerSelection = checkForEmptyValue(playerSelection);
+    // Checking if a player canlceled the game or playerSelection is undefined
+    if(playerSelection!== undefined && playerSelection !== null) {
+        playerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase(); 
+        if (!array_of_choices.includes(playerSelection)) {
+            while (!array_of_choices.includes(playerSelection) && playerSelection !== null) {
+                alert(`You typed a wrong word. Try again`);
+                playerSelection = prompt("Please type either rock, paper or scissors:");
+                playerSelection = checkForEmptyValue(playerSelection);
+                // Checking if a player canlceled the game or playerSelection is undefined   
+                if(playerSelection !== undefined && playerSelection !== null) {
+                    playerSelection = playerSelection[0].toUpperCase() + playerSelection.substring(1).toLowerCase();
+                } 
             }
         }
-        else {
-            if (convertedPlayerSelection === 'Rock') {
-                if (computerSelection === 'Paper') {
-                    computer.score++;
-                    return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                }
-                else if (computerSelection === 'Scissors') {
-                    player.score++;
-                    return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                }
-                else if (computerSelection === 'Rock') {
-                    return "Draw!";
-                }
-            }
-            else if (convertedPlayerSelection === 'Paper') {
-                if (computerSelection === 'Scissors') {
-                    computer.score++;
-                    return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                }
-                else if (computerSelection === 'Rock') {
-                    player.score++;
-                    return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                }
-                else if (computerSelection === 'Paper') {
-                    return "Draw!";
-                }
-            }
-            else if (convertedPlayerSelection === 'Scissors') {
-                if (computerSelection === 'Rock') {
-                    computer.score++;
-                    return `You lose! ${computerSelection} beats ${convertedPlayerSelection}`;
-                }
-                else if (computerSelection === 'Paper') {
-                    player.score++;
-                    return `You win! ${convertedPlayerSelection} beats ${computerSelection}`;
-                }
-                else if (computerSelection === 'Scissors') {
-                    return "Draw!";
-                }
-            }
-        }     
+        return playerSelection;
+    }
+    else return;
+}
+
+
+function playRound(playerSelection, computerSelection) {
+    try {
+        player.changeRoundCount = player.playedRounds + 1;
+        if ((playerSelection === 'Rock' && computerSelection === 'Paper') 
+         ||(playerSelection === 'Paper' && computerSelection === 'Scissors')
+         ||(playerSelection === 'Scissors' && computerSelection === 'Rock')) { 
+            computer.score++;
+            return `You lose! ${computerSelection} beats ${playerSelection}`;
+        }
+        else if ((playerSelection === 'Rock' && computerSelection === 'Scissors')
+             || (playerSelection === 'Scissors' && computerSelection === 'Paper')
+             || (playerSelection === 'Paper' && computerSelection === 'Rock')) {
+            player.score++;
+            return `You win! ${playerSelection} beats ${computerSelection}`;
+        }
+        else if (playerSelection === computerSelection) {
+            return "Draw!";
+        }
     }
     catch (err) {
         console.log(err);
     }
-    
 }
 
 function setRoundName(roundNumber) {
@@ -157,50 +88,29 @@ function setRoundName(roundNumber) {
         default:
             roundName = "";           
     }
-
     return roundName;
 }
 
-function game() {
-    let title = "Instructions ";
-    let instructionMessage = title.toUpperCase() + '\u{1F447}' + `\n\n    The game consists of 5 rounds.
-    In each round, you will be given 10 chances to write your
-    answer correctly.
-    You should type either rock, paper or scissors.
-    You also need to guess the selection of computer in order to win.
-    In fact, computer randomly selects one of the following 3 options:
-    1. Rock         2. Paper        3. Scissors
-    Please check your spelling after entering your input.
-    If you are ready, please press \"OK\" to start the game
-    or \"Cancel\" to exit.` 
-    if (confirm(instructionMessage) === true) {
-        for (let i = 0; i < 5; i++) {
-            let roundName = setRoundName(i+1);
-            if(roundName !== ""){
-                alert(`The ${roundName} round started`);
-            }
-            let playerSelection = prompt("Please type either rock, paper or scissors:");
-            const computerSelection = computerPlay();
-            if (playerSelection === "" || playerSelection === null || playerSelection === undefined) {
-                while(playerSelection === "" || playerSelection === null || playerSelection === undefined){
-                    alert("You should enter some text");
-                    playerSelection = prompt("Please type either rock, paper or scissors:");
-                } 
-            }
-            let msg = playRound(playerSelection, computerSelection);
-            let scores = `\n \u{1F464} Your score is ${player.score}
-                        \u{1F4BB} Computer score is ${computer.score}`;
-            console.log(`${scores}`);
-            console.log(msg);
-            if(i < 4) {
-                alert("Now press OK to turn to the next round."); 
-            }
-        }
+function exit() {
+    let exit_msg = confirm("Do you want to exit?");
+    if(exit_msg){
+        exit_checking.change_exit_value = true;
+        alert("You exited");
+        return true;
+    }
+    else if (exit_msg === null){
+        exit_checking.change_exit_value = false;
+        return false;
+    }
+}
+
+function finishGame() {
+    if (player.playedRounds > 0) {
         console.log(`\nThe game is over...`);
         if (player.score > computer.score){
             alert(`\u{1F917} Congratulaions!!! You win!`);
             console.log(`\u{1F917} Congratulaions!!! You win!`);
-        }
+        } 
         else if (computer.score > player.score) {
             alert(`\u{1F614} You lose!`);
             console.log(`\u{1F614} You lose!`);
@@ -209,27 +119,71 @@ function game() {
             alert(`\u{1F91D} Draw`);
             console.log(`\u{1F91D} Draw!`);
         }
-        alert("The game is over. Press OK to exit");
+        if (player.playedRounds === 4 ) alert("The game is over. Press OK to exit");
         return;
     }
+    else return;
+}
+
+function game() {
+    let title = "Instructions ";
+    let instructionMessage = title.toUpperCase() + '\u{1F447}' + `\n\n    The game consists of 5 rounds.
+    You should type either rock, paper or scissors.
+    You also need to guess the selection of computer in order to win.
+    In fact, computer randomly selects one of the following 3 options:
+    1. Rock         2. Paper        3. Scissors
+    Please check your spelling after entering your input.
+    If you are ready, please press \"OK\" to start the game
+    or \"Cancel\" to exit.` 
+    if (exit_checking.exit_value) return;
+    if (confirm(instructionMessage) === true) {
+        for (let i = 0; i < 5; i++) {
+            let roundName = setRoundName(i+1);
+            if(roundName !== ""){
+                alert(`The ${roundName} round started`);
+            }
+            const playerSelection = collectPlayerData();
+            const computerSelection = computerPlay();
+            // Checking if the game was canceled
+            if(!exit_checking.exit_value){
+                let msg = playRound(playerSelection, computerSelection);
+                let scores = `\n \u{1F464} Your score is ${player.score}
+                        \u{1F4BB} Computer score is ${computer.score}`;
+                console.log(`${scores}`);
+                console.log(msg);
+                if(i < 4) alert("Now press OK to turn to the next round."); 
+            }
+            else break;
+        }
+        finishGame();
+    }     
     else {
-        alert("You exited");
-        return;
+        if(exit()) return;
+        else game();
     }
+    return;
 }
 
 const player = {
     score:0,
-    number_of_guesses: 10,
+    numberOfRounds: 0,
 
-    set changeGuessCount(newCount) {
-        this.number_of_guesses = newCount;
+    set changeRoundCount(newValue) {
+        this.numberOfRounds = newValue;
     },
-
-    get guessCount() {
-        return this.number_of_guesses;
+    get playedRounds() {
+        return this.numberOfRounds;
     }
 };
-
 const computer = {score:0};
+const array_of_choices = ['Rock', 'Paper', 'Scissors'];
+const exit_checking = {
+    exit: false,
+    set change_exit_value(value) {
+        this.exit = value;
+    },
+    get exit_value() {
+        return this.exit;
+    }
+};
 game();
